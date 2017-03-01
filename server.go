@@ -183,7 +183,13 @@ func newServer(iface *net.Interface) (*Server, error) {
 		if err := p1.JoinGroup(iface, &net.UDPAddr{IP: mdnsGroupIPv4}); err != nil {
 			return nil, err
 		}
+		if err := p1.SetMulticastInterface(iface); err != nil {
+			return nil, err
+		}
 		if err := p2.JoinGroup(iface, &net.UDPAddr{IP: mdnsGroupIPv6}); err != nil {
+			return nil, err
+		}
+		if err := p2.SetMulticastInterface(iface); err != nil {
 			return nil, err
 		}
 	} else {
